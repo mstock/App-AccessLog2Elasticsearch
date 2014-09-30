@@ -1,0 +1,20 @@
+#!/usr/bin/env perl
+
+package accesslog2elasticsearch;
+
+# ABSTRACT: Parse an Apache access log file and create an Elasticsearch document per line
+
+use strict;
+use warnings;
+use FindBin;
+use lib "$FindBin::RealBin/../lib";
+use App::AccessLog2Elasticsearch;
+
+App::AccessLog2Elasticsearch->new_with_options()->run();
+
+=head1 SEE ALSO
+
+See L<App::AccessLog2Elasticsearch|App::AccessLog2Elasticsearch> for the actual
+application behind this script.
+
+=cut
