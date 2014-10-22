@@ -40,6 +40,10 @@ This method expects its parameters as a hash reference.
 
 =over
 
+=item host
+
+Hostname, IP-address or another identifier of the host the logfile is from.
+
 =item vhost
 
 Virtual host the log file belongs to. Required.
@@ -77,6 +81,13 @@ L<Apache::Log::Parser|Apache::Log::Parser> instance to use for log parsing.
 =back
 
 =cut
+
+has 'host' => (
+	is            => 'ro',
+	isa           => 'Str',
+	required      => 0,
+	documentation => 'Hostname, IP address or another identifier of the host the logfile is from',
+);
 
 has 'vhost' => (
 	is            => 'ro',
@@ -187,6 +198,9 @@ sub run {
 			$parsed_line->{datetime}
 		)->set_time_zone('UTC')->strftime('%FT%TZ');
 		$parsed_line->{vhost} = $self->get_vhost();
+		if (defined $self->get_host()) {
+			$parsed_line->{host} = $self->get_host();
+		}
 
 		$bulk->create_docs($parsed_line);
 	}
